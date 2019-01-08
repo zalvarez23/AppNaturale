@@ -1,0 +1,73 @@
+
+<ion-view view-title="Reporte de Fotos" name="" ng-init="ListaReportFotos">
+  <ion-content >
+      <div class="list card">
+
+  <div class="item item-avatar">
+    <img src="img/photo.jpg">
+    <h2>Lista De Fotos Por Tienda</h2>
+    <p>{{fechaNow}}</p>
+
+  </div>
+
+  <div class="item item-body" >
+
+  
+
+  <label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Desde</span>
+  <input style="font-size:11px;" id="fechainii"  type="date">
+</label>
+
+<label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Hasta</span>
+  <input style="font-size:11px;" id="fechafinn" type="date">
+</label>
+     <a class="item item-icon-left positive"  ng-click="ListaReportFotos()">
+    <i class="icon ion-refresh"></i>
+    Presione para actualizar. 
+  </a>  
+  </div>
+
+</div>
+<div id="divCargandoM" style="text-align:center;padding-top:40px;display:none;">
+
+    <ion-spinner icon="android" ></ion-spinner>
+    
+     <ion-list>
+     <br>
+  </div>
+   <label class="item item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input type="text" ng-model="searchText" placeholder="Busqueda. .">
+  </label>
+   <div class="row header headerS">
+          <div class="col">Usuario</div>
+          <div class="col">Puntaje</div>
+          <div class="col">Total Tiendas</div>
+          <div class="col">Sin Foto</div>
+          <div class="col">Con Foto</div>
+          <div class="col">Eficiencia</div>
+        </div>
+        <div class="row" ng-repeat="data in ListaReport | filter:searchText">
+          <div class="col colS">{{data.co_usua_supe}}</div>
+          <div class="col colS">{{data.Puntaje}}</div>
+          <div class="col colS">{{data.TotalTiendas}}</div>
+          <div class="col colS">{{data.SinFoto}}</div>
+          <div class="col colS">{{data.ConFoto}}</div>
+          <div class="col colS">{{data.Eficiencia}}</div>
+        </div>
+ <!--  <ion-list >
+         <ion-item  class="animate-repeat-ti item-avatar item-icon-right" ng-repeat="ti in ListaReport | filter:searchText"  type="item-text-wrap"  href="">
+        <img ng-src="img/ionic.png">
+        <h2 style="color:rgb(82, 112, 163);font-size:12px;text-transform:capitalize;">Tienda : {{ti.NOMBRE}}</h2>
+        <h2 style="color:rgb(82, 112, 163);font-size:12px;text-transform:capitalize;">{{ti.DIRECCION}}</h2>
+        <p style="font-size:11px;">Fotos tomadas : {{ti.TOTAL}} </p>
+         
+      
+      </ion-item>
+
+    </ion-list> -->
+
+    </ion-content>
+</ion-view>

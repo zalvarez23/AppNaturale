@@ -1,0 +1,66 @@
+
+<ion-view view-title="Cantidad de Tiendas (Ventas)" name="" ng-init="ListaReportTiendas();">
+  <ion-content >
+      <div class="list card">
+
+  <div class="item item-avatar">
+    <img src="img/photo.jpg">
+    <h2>Cantidad de Tiendas vendidas</h2>
+    <p>{{fechaNow}}</p>
+
+  </div>
+
+  <div class="item item-body" >
+
+  <label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Desde</span>
+  <input style="font-size:11px;" id="txtDesde11"   type="date" >
+  
+</label>
+ <label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Hasta</span>
+  <input style="font-size:11px;" id="txtHasta11"   type="date" >
+  
+</label>
+
+
+   <div class="row">
+  <div class="col"  ng-repeat="ch in checkeds"><label class="checkbox">
+       <input type="checkbox" ng-model="ch.check" ng-checked="ch.check">
+     </label> <n style="font-size:12px;">{{ch.score}}</n></div>
+    
+</div>
+     <a class="item item-icon-left positive"  ng-click="ListaReportTiendas()">
+    <i class="icon ion-refresh"></i>
+    Presione para actualizar. 
+  </a>  
+  </div>
+
+</div>
+<div id="divCargandoP" style="text-align:center;padding-top:40px;display:none;">
+    <ion-spinner icon="android" ></ion-spinner>
+    <ion-list>
+     <br>
+  </div>
+    <label class="item item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input type="text" ng-model="searchText" placeholder="Busqueda. .">
+  </label>
+  <div class="row header headerS">
+          <div class="col ">Usuario</div>
+          <div class="col ">Puntaje</div>
+          <div class="col ">Total Tiendas</div>
+          <div class="col ">Sin Pedidos</div>
+          <div class="col ">Con Pedidos</div>
+          <div class="col ">Eficiencia</div>
+        </div>
+        <div class="row" ng-repeat="data in ListaReport | filter:searchText">
+          <div class="col colS">{{data.co_usua_supe}}</div>
+          <div class="col colS">{{data.Puntaje}}</div>
+          <div class="col colS">{{data.TotalTiendas}}</div>
+          <div class="col colS">{{data.SinPedidos}}</div>
+          <div class="col colS">{{data.ConPedidos}}</div>
+          <div class="col colS">{{data.Eficiencia}}</div>
+        </div>
+    </ion-content>
+</ion-view>

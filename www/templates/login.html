@@ -1,0 +1,40 @@
+
+<ion-view view-title="Naturale" name="tab-loginn">
+  <ion-content >
+       <div id="paginaPrincipal">
+ <div class="item item-body">
+    <br><br>
+    <center><img class="full-image" src="img/Logo.jpg" style="width : 70%;" ></center>
+    <br>
+     <div class="padding">
+
+        <p></p>
+        <div class="list list-inset">
+  <label class="item item-input">
+    <i class="icon ion-person placeholder-icon"></i>
+    <input type="text"  id="txtusu"  placeholder="Usuario">
+  </label>
+  <p>
+  <label class="item item-input">
+    <i class="icon ion-locked placeholder-icon"></i>
+    <input  type="password" id="txtpass"   placeholder="Contraseña">
+  </label>
+</div>
+         </div>
+     </div>
+
+<div class="padding">
+  <div id="loadLogin" style="text-align:center; display:none;">
+     <ion-spinner icon="android" ></ion-spinner>
+  </div>
+  
+       <br>
+        <button class="button button-block button-assertive" ng-click="InicioSesion()">Iniciar Sesión</button>
+
+      </div>
+
+    <a href="#/signup" class="button button-positive button-clear button-block button-small">Or create an account</a>
+    </div>
+    
+  </ion-content>
+</ion-view>

@@ -1,0 +1,102 @@
+
+<ion-view view-title="Puntuación de fotos" ng-init="ListaDetallePedido();ListaMultiFotos();">
+  <ion-content >
+     
+   <div id="LoadingHistorial" style="text-align:center;padding-top:2px;">
+
+     <br>
+    <ion-spinner icon="android" ></ion-spinner>
+    <p></p>
+    <p style="font:menu; font-size:11px;">Cargando información..</p>
+     <ion-list>
+  </div>
+   <div >
+      <div style="font:menu;"  > 
+     <a class="item item-icon-left assertive" style="white-space: normal; font-size:12px;text-align: center;">
+    
+    PUNTUACIÓN
+  </a>
+     <li class="item item-toggle">
+     <p ng-if="checkedPunt==true" style=" color: #666;font:menu; font-size:13px; ">Puntuación : <span style="color:#2694D6
+      ">{{getPuntuacion(checkedPunt)}}</span></p>
+     <p ng-if="checkedPunt==false" style="color: #666;font:menu; font-size:13px;">Puntuación :  <span style="color:#2694D6
+      ">{{getPuntuacion(checkedPunt)}}</span></p>
+     <label class="toggle toggle-assertive" id="checkPunt">
+       <input type="checkbox" ng-model="checkedPunt" >
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+     
+  </li>
+ <button class="button button-block button-positive" id="btnPuntuar" ng-click="PuntuacionFotos()">
+  Puntuar
+</button>
+    <div id="paginaPrincipalHis" >
+      <div id="contentVentaHis"style="font:menu;display:none;"  > 
+     <a class="item item-icon-left assertive" style="white-space: normal; font-size:12px;text-align: center;">
+    
+    {{titleRutaFoto}}
+  </a>
+   <a class="item item-icon-left positive" id="btnSeleccionaProductosHis"   style="font: menu;font-size: 13px;">
+    <i class="icon ion-ios-cart"></i>
+    Detalle de Productos
+     
+  </a>
+
+
+  <li class="item">
+     <p ng-if="checkedTipo==true" style=" color: #666;font:menu; font-size:12px;">Tipo de Documento : <span style="color:#2694D6
+      ">{{getTipoDoc(checkedTipo)}}</span></p>
+     <p ng-if="checkedTipo==false" style="color: #666;font:menu; font-size:12px;">Tipo de Documento :  <span style="color:#2694D6
+      ">{{getTipoDoc(checkedTipo)}}</span></p>
+  
+  </li>
+   <ion-list id="listaRutasHis">
+      <ion-item class="item-remove-animate"  ng-repeat="item in productosAgregados" style="text-transform:capitalize;">
+        <p style="padding-left:20px; font-size:12px;">{{item.desProducto}}</p>
+        <p style="padding-left:20px; font-size:12px;">Cantidad : {{item.cantidad}}</p>
+
+        <ion-option-button class="button-assertive" ng-click="deleteProductoAgregado(item)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+
+    </ion-list>
+
+<div class="row">
+  <div class="col" style="font: menu;
+    font-size: 12px;
+    color: rgb(113, 163, 248);"><p><span >{{calculoTotal()}} </span></p></div>
+
+</div>
+
+  </div>
+
+<div class="list card">
+  <a class="item item-icon-left assertive" style="white-space: normal; font-size:12px;text-align: center;">
+   FOTOS TOMADAS
+  </a>
+<div class="padding" style="font:menu; font-size:11px;text-transform:capitalize;">
+  <p>Comentario : <span>{{valuesFoto.coment}}</span></p>
+  <p>Tipo de foto : <span >{{valuesFoto.tipofoto}}</span> </p>
+  <p>Fecha de foto : <span >{{valuesFoto.fecha}}</span></p>
+</div>
+
+   <div class="col" style="text-align: center;"> 
+    <img ng-show="valuesFoto.imgURI !==undefined" width="270" height="350" ng-src="{{valuesFoto.imgURI}}">
+    <img ng-show="valuesFoto.imgURI ===undefined" width="270" height="350" ng-src="img/300.png">
+  </div>
+ 
+<div class="row">
+  <div class="col col-25" ng-repeat="item in pictures">
+
+   <img width="70" height="100" src="{{item.urlfoto}}" ng-click="viewPhoto(item)">
+ </div>
+   
+  </div>
+
+</div>
+    </div>
+    </ion-content>
+</ion-view>

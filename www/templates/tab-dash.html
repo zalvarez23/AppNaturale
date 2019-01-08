@@ -1,0 +1,59 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-divider">Recent Updates</div>
+      <div class="item item-body">
+        <div>
+          There is a fire in <b>sector 3</b>
+        </div>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">Health</div>
+      <div class="item item-body">
+        <div>
+          You ate an apple today!
+        </div>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">Upcoming</div>
+      <div class="item item-body">
+        <div>
+          You have <b>29</b> meetings on your calendar tomorrow.
+        </div>
+      </div>
+    </div>
+    <div  ng-app="apiApp" ng-controller="apiAppCtrl as vm">
+
+    
+
+  <h1>Pruebo Ajax</h1>
+  <p>
+      Selecciona:
+      <select ng-model="vm.url" ng-change="vm.buscaEnRegion()">
+       <option value="http://restcountries.eu/rest/v1/region/africa">Africa</option>
+        <option value="http://restcountries.eu/rest/v1/region/europe">Europa</option>
+        <option value="http://restcountries.eu/rest/v1/region/americas">America</option>
+      </select>
+  </p>
+    <div class="list card" ng-repeat="pais in vm.paises">
+      <div class="item item-divider"><span>{{pais.name}}</span></div>
+      <div class="item item-body" >
+        <div>
+            País: <span>{{pais.name}}</span>, capital: {{pais.capital}}
+        </div>
+      </div>
+    </div>
+
+
+  <ul  class="list">
+      <li class="item" ng-repeat="pais in vm.paises">
+        País: <span>{{pais.name}}</span>, capital: {{pais.capital}}
+      </li>
+  </ul>
+</div>
+
+</body>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,151 @@
+
+<ion-view view-title="Fotos" ng-init="ListaBonificacion()">
+  <ion-content >
+ 
+    <div id="paginaPrincipal" >
+      <div  id="contentVenta"style="font:menu;display:none;" > 
+     <a class="item item-icon-left assertive" style="white-space: normal; font-size:12px;text-align: center;">
+    
+    {{titleRutaFoto}}
+  </a>
+   <a class="item item-icon-left positive" id="btnSeleccionaProductos" ng-click="openModal();" style="font: menu;font-size: 13px;">
+    <i class="icon ion-ios-cart"></i>
+    Click aqui para seleccionar productos. 
+  
+   
+  </a>
+ 
+
+  <div class="list card">
+  <a class="item item-icon-left positive" ng-click="getReport()" style="font: menu;font-size: 13px;">
+    <i class="icon ion-briefcase"></i>
+    Ver Reportes    
+  </a>
+</div>
+    <ion-list id="listaRutas">
+      <ion-item class="item-remove-animate"  ng-repeat="item in productosAgregados" style="text-transform:capitalize;">
+        <p style="padding-left:20px; font-size:12px;">{{item.desProducto}}</p>
+        <p style="padding-left:20px; font-size:12px;">Cantidad : {{item.cantidad}}</p>
+
+        <ion-option-button class="button-assertive" ng-click="deleteProductoAgregado(item)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+
+    </ion-list>
+
+<div class="row">
+  <div class="col" style="font: menu;
+    font-size: 12px;
+    color: rgb(113, 163, 248);"><p>Total : <span >{{calculoTotal()}} </span></p></div>
+
+</div>
+ 
+<div class="list card">
+  <a class="item item-icon-left positive" id="btnGenerarPedido" ng-click="PopAddCabConfirm();" style="font: menu;font-size: 13px;">
+    <i class="icon ion-briefcase"></i>
+    Generar Pedidos 
+  
+   
+  </a>
+</div>
+  <a class="item item-icon-left assertive" style="white-space: normal; font-size:12px;">
+    <i class="icon ion-alert"></i>
+    Promosiones de la tienda . 
+    <br>
+    <p ng-repeat="item in beneficios" style="font:menu; text-transform:capitalize; font-size:12px;">
+      - {{item.desProducto}}</p>
+
+  </a>
+  </div>
+
+<div class="list card">
+
+      <a class="item item-icon-left positive" ng-click="takePicture()"  style="font: menu;font-size: 13px;">
+    <i class="icon ion-camera"></i>
+    Click para tomar foto.
+    <a class="item item-icon-left assertive"  href="#/tab/rutas" style="font: menu;font-size: 13px;">
+    <i class="icon ion-android-arrow-back"></i>
+    Regresar 
+  </a>  
+  </a>   
+<label class="item item-input">
+    <input type="text" id="{{idtxt}}" placeholder="Digite un comentario a esta fotografía.">
+  </label>
+
+
+   <div class="col" style="text-align: center;"> 
+    <img ng-show="imgURI !==undefined" width="270" height="350" ng-src="{{imgURI}}">
+    <img ng-show="imgURI ===undefined" width="270" height="350" ng-src="img/300.png">
+  </div>
+ 
+<div class="row">
+  <div class="col col-25" ng-repeat="item in pictures">
+
+    <button class="button button-clear button-assertive" style="font:menu; font-size:11px;" ng-click="deleteFoto(item)">Borrar</button>
+   <img width="70" height="100" src="{{item.src}}" ng-click="viewPhoto(item.src)">
+ </div>
+   
+  </div>
+ 
+<a class="item item-icon-left positive" ng-click="send()"  style="font:menu; font-size:13px;">
+    <i class="icon ion-checkmark"></i>
+    Subir Foto.
+
+  </a>
+ 
+</div>
+    </div>
+    <script id="productos.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+      <h1 class="title">Productos por tienda</h1>
+    </ion-header-bar>
+    <ion-content>
+     <a class="item item-icon-left positive" style="white-space: normal; font-size:12px;text-align: center;">
+     <i class="icon ion-checkmark"></i>
+    Seleccione los productos a agregar.
+  </a>
+
+<div class="row">
+  <div class="col" >
+   <a class="item item-icon-left assertive"  ng-click="closeModal();" style="font: menu;font-size: 13px;">
+    <i class="icon ion-android-arrow-back"></i>
+    Regresar 
+  </a>
+  </div>
+  <div class="col" > <a class="item item-icon-left balanced" ng-click="agregarProducto();closeModal();" style="font: menu;font-size: 13px;">
+    <i class="icon ion-ios-cart"></i>
+    Agregar 
+  </a>  
+  </div>
+
+</div>
+
+ <label class="item item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input type="text" ng-model="search" placeholder="Busqueda General">
+  </label>
+   <div id="divCargandoProductos" style="text-align:center;padding-top:2px;">
+   <br>
+    <ion-spinner icon="android" ></ion-spinner>
+    <p></p>
+    <p style="font:menu; font-size:11px; color:#4b8bf4;">Cargando Productos..</p>
+     <ion-list>
+ 
+  </div>
+   <ion-list >
+<ion-item class="item-remove-animate"  ng-repeat="item in productos |filter: search" style="text-transform:capitalize;">
+  <ion-checkbox ng-model="item.check" ng-click="changeTxt(item.check,item.id)" style="font: menu;font-size: 12px;color: #464343; text-transform:capitalize; border-width: none !important;     border-style: initial !important; ">
+   {{item.desProducto}} | prec : {{item.precProducto}}
+   </ion-checkbox>
+    <input type="tel" id="txt{{item.id}}" ng-model="item.cantidad" placeholder="Ingresar Cantidad" />
+      </ion-item>
+
+    </ion-list>
+
+     </ion-content>
+  </ion-modal-view>
+</script>
+  </ion-content>
+</ion-view>

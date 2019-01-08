@@ -1,0 +1,50 @@
+<ion-view  view-title="Listado de rutas">
+
+  <ion-content class="scroll-content ionic-scroll" >
+   <ion-refresher on-refresh="ListaRutasRc(1)"></ion-refresher>
+  <div class="list card">
+  <div class="item item-avatar" >
+
+    <img src="img/photo.jpg">
+     <h2>{{usuariologer}}</h2>
+    <p>Seleccióne un tienda a supervisar .</p>
+
+  </div>
+    <label class="item item-input" style="display:none;">
+  <span class="input-label" style="font-size:11px;">Desde</span>
+  <input style="font-size:11px;" id="txtfechaini" value="{{fechaini}}"  type="date">
+</label><label class="item item-input" style="display:none;">
+  <span class="input-label" style="font-size:11px;">Hasta</span>
+  <input style="font-size:11px;" id="txtfechafin" type="date">
+</label>
+ 
+ <a class="item item-icon-left positive"  ng-click="ListaRutasRc(0)" style="font:menu; font-size:13px;">
+    <i class="icon ion-refresh"></i>
+    Presione para actualizar.
+  </a>  
+</div>
+  <div id="divCargandoRutas" style="text-align:center;padding-top:2px;display:{{loadingDis}}">
+    <ion-spinner icon="android" ></ion-spinner>
+    <p></p>
+    <p style="font:menu; font-size:11px;">Cargando rutas..</p>
+     <ion-list>
+     <br>
+  </div>
+    <ion-list id="listaRutas">
+      <ion-item class="item-remove-animate item-avatar" ng-repeat="ruta in canales"  href="#/tab/chats/{{ruta.id}}|{{ruta.idTienda}}">
+        <img ng-src="img/alert.png">
+        <h2 style="color:rgb(82, 112, 163);font-size:12px; text-transform: capitalize;">{{ruta.nomTienda}}</h2>
+        <p style="font-size:11px;">{{ruta.direccion}}</p>
+        
+<n class="badge" ><p style="font-size:11px;">{{ruta.fecha}} </p></n> 
+        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+
+    </ion-list>
+
+     
+  </ion-content>
+
+</ion-view>

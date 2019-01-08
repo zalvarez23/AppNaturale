@@ -1,0 +1,65 @@
+<ion-view view-title="Account">
+  <ion-content>
+    <ion-list>
+   <ion-toggle ng-repeat="item in config"  ng-model="item.checked"   ng-checked="item.checked">
+          {{ item.text }}
+        </ion-toggle>
+   <div class="list card">
+
+  <div class="item item-avatar">
+    <img src="img/photo.jpg">
+    <h2>Record de Productos Vendidos</h2>
+    <p>{{fechaNow}}</p>
+
+  </div>
+
+  <div class="item item-body" >
+
+  <label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Desde</span>
+  <input style="font-size:11px;" id="txtDesdeRecord"   type="date" >
+  
+</label>
+ <label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Hasta</span>
+  <input style="font-size:11px;" id="txtHastaRecord"   type="date" >
+  
+</label>
+
+   <div class="row">
+  <div class="col"  ng-repeat="ch in checkeds"><label class="checkbox">
+       <input type="checkbox" ng-model="ch.check" ng-checked="ch.check">
+     </label> <n style="font-size:12px;">{{ch.score}}</n></div>
+    
+</div>
+     <a class="item item-icon-left positive"  ng-click="listaRecordUsuarios()">
+    <i class="icon ion-refresh"></i>
+    Presione para actualizar. 
+  </a>  
+  </div>
+
+</div>
+<div id="divCargandoRecord" style="text-align:center;padding-top:40px;">
+    <ion-spinner icon="android" ></ion-spinner>
+    <ion-list>
+     <br>
+  </div>
+
+<label class="item item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input type="text" ng-model="searchText" placeholder="Busqueda. .">
+  </label>
+    <div class="row header headerS">
+          <div class="col">Vendedor</div>
+          <div class="col">Producto</div>
+          <div class="col">Cantidad</div>
+        </div>
+        <div class="row" id="" style="" ng-repeat="data in ListaReport | filter:searchText">
+          <div class="col colS">{{data.Vendedor}}</div>
+          <div class="col colS">{{data.Producto}}</div>
+          <div class="col colS">{{data.Cantidad}}</div>
+          
+        </div>
+
+  </ion-content>
+</ion-view>

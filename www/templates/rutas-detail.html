@@ -1,0 +1,27 @@
+<ion-view view-title="Areas por Tienda">
+  <ion-content >
+
+ <div class="item item-avatar">
+    <img src="img/logoN.png">
+    <h2>{{valores.no_cana}}</h2>
+    <p>Seleccionar una tienda .</p>
+
+  </div>
+ 
+<a class="item item-icon-left positive"  ng-click="Listatiendas()" style="font:menu; font-size:13px;">
+    <i class="icon ion-refresh"></i>
+    Presione para actualizar. 
+  </a>  
+  
+    <ion-list >
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="ti in tiendas |filter: search" type="item-text-wrap" href="#/tab/rufoto/{{ti.id}}|{{ti.tipoPedido}}|{{ti.idCanal}}|{{ti.idLocal}}">
+        <img ng-src="{{ti.tipoPedido == 'si' && 'img/venta.png' || 'img/foto.png'}}">
+        <h2 style="font-size:12px;">{{ti.nomArea}}</h2>
+        <p style="font-size:11px;">{{ti.direccion}}</p>
+        {{validaImg}}
+     <n class="badge" ><p style="font-size:11px;">{{ti.fechaSupe}}</p></n> 
+       
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
