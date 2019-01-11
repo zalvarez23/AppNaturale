@@ -59,3 +59,25 @@
     border-bottom-style: none;
     border-right-style: none;
 }
+.modalStyle{
+    height: auto;max-height: 200px;
+    padding-bottom: 5px;
+    margin-top:-8px;
+  }
+  .modalStyle .cardP{
+    border-left: 3px solid #f55b38;
+    margin-bottom: 8px;
+  }
+  .modalStyle .cardP2{
+    border-left: 3px solid #04b10e;
+    margin-bottom: 8px;
+  }
+  .modalStyle .colP{
+     margin-left: -25px;
+     margin-right: -59%;
+      margin-bottom: 7px;
+  }
+
+  .modalStyle .contentPlantilla{
+    border-bottom: 1px solid rgba(154, 154, 154, 0.11);
+  }
