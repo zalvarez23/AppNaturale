@@ -1,7 +1,7 @@
 
 // VARIABLE RUTA
-var urlNaturale = "http://200.110.43.43/ContentServicesNaturale.asmx/";
-//var urlNaturale = "http://192.168.0.10:8093/ContentServicesNaturale.asmx/";
+//var urlNaturale = "http://200.110.43.43/ContentServicesNaturale.asmx/";
+var urlNaturale = "http://192.168.0.33:8099/ContentServicesNaturale.asmx/";
 //
 function getDateNow() {
   var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
@@ -66,7 +66,8 @@ angular.module('starter.controllers', ['firebase'])
 
     // parametros de la pagina
 
-
+    $scope.itemRuta = JSON.parse(localStorage.getItem('dataRuta'));
+ 
     var parameters = $stateParams.fotoId;
     parameters = parameters.split("|");
 
@@ -570,15 +571,62 @@ angular.module('starter.controllers', ['firebase'])
   })
 
 
-  .controller('RutasCtrl', function ($scope, $http, $ionicLoading, Chats, $location, $ionicModal, $ionicPopup) {
+  .controller('RutasCtrl', function ($scope, $http, $timeout, $ionicLoading, Chats, $location, $ionicModal, $ionicPopup, $cordovaGeolocation) {
 
+    $scope.saveItem = function(item){
+      localStorage.setItem('dataRuta',JSON.stringify(item))
+    }
+    $scope.paramsCheck = {
+      check1: true,
+      check2: false
+    }
+    $scope.changeCheck = function (value) {
+      if (value == 1) {
+        $scope.paramsCheck.check1 = true;
+        $scope.paramsCheck.check2 = false;
+      } else {
+        $scope.paramsCheck.check1 = false;
+        $scope.paramsCheck.check2 = true;
+      }
+    }
+    $scope.paramsSearchRuc = {
+      ruc: ''
+    }
+    $scope.ListaRutasRc2 = function () {
+      $scope.loadingDis = ''
+      $http({
+        url: urlNaturale + 'ListaRutaPorRuc',
+        method: 'GET',
+        params: $scope.paramsSearchRuc
+      }).success(function (data) {
+        $scope.canales2 = [];
+        console.log(data)
+        data.forEach(item => {
+          $scope.canales2.
+            push({
+              id: 1,
+              idTienda: item.I_local,
+              nomTienda: item.LOCAL,
+              direccion: item.direccion,
+              count: '1',
+              fecha: item.fechaSupe,
+              ruc: item.ruc
+            })
+        });
+
+        $scope.loadingDis = 'none';
+      }).error(function () {
+        alert('Ocurrio un problema con la conexion, vuelva a intentar.')
+        return;
+      });
+    }
     $ionicLoading.hide();
     $scope.usuariologer = usuario;
 
     var loading = document.getElementById('divCargandoRutas');
 
     $scope.fechaini = fecha1;
-    $scope.listCuadrante = [1,2,3,4,5,6,7,8,9,10];
+    $scope.listCuadrante = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     // MODAL PARA ACTUALIZAR AL CLIENTE
     var alertPop = function (title, template, css, $scope) {
       var alertPopup = $ionicPopup.alert({
@@ -589,41 +637,166 @@ angular.module('starter.controllers', ['firebase'])
         buttons: [
           { text: 'Cancelar' },
           {
-            text: '<b>Actualizar</b>',
+            text: '<b>Generar</b>',
             type: 'button-positive',
             onTap: function (e) {
-              console.log('ok')
+              return 'success'
             }
           }
         ]
       });
       return alertPopup;
     }
+    var paramsAct = {
+      idLocal: 0,
+      Gps: '',
+      Cuadrante: ''
+    }
     $scope.openModalActualizar = function (item) {
       var cabecera, template;
 
-      cabecera = "Seleccionar Cuadrante";
+      cabecera = "Actualizar Informacion";
       template = '<div class="modalStyle">' +
         '<div class="card-panel grey lighten-5 z-depth-1 cardP" id="item{{item}}" ng-repeat="item in listCuadrante" ng-click="selectCuadrante(item)">' +
         '<div class="row valign-wrapper contentPlantilla">' +
         '<div class="col"><span class="black-text">{{item}}</span>' +
         '</div></div></div></div>';
       var alertPopAux = alertPop(cabecera, template, '', $scope);
-      console.log(item)
+      paramsAct.idLocal = item.idTienda;
+      alertPopAux.then(function (res) {
+
+        if (res != 'success') {
+          return;
+        }
+        $ionicLoading.show({
+          template: 'Actualizando Informacion . . ',
+        })
+        var posOptions = { timeout: 10000, enableHighAccuracy: false };
+        $cordovaGeolocation
+          .getCurrentPosition(posOptions)
+          .then(function (position) {
+            var latLong = position.coords.latitude + '/' + position.coords.longitude;
+            paramsAct.Gps = latLong;
+            $http({
+              url: urlNaturale + 'ActualizarGpsCuadranteLocales',
+              method: 'GET',
+              params: paramsAct
+            }).success(function (data) {
+              $ionicLoading.show({
+                template: 'Proceso Realizado Correctamente . . ',
+                duration: 2000
+              })
+            }).error(function () {
+              $ionicLoading.hide();
+              alert('Ocurrio un problema con la conexion, vuelva a intentar.')
+              return;
+            });
+          }, function (err) {
+            $ionicLoading.hide();
+            alert('Ocurrio un problema con la conexion, vuelva a intentar.')
+
+            // error
+          });
+
+      })
     }
 
-    $scope.selectCuadrante = function(item){
+    var getUsuariosAuto = function () {
+      $http({
+        url: urlNaturale + 'ListaUsuariosAUTO',
+        method: 'GET'
+      }).success(function (data) {
+        $scope.listUsuariosAuto = data;
+        console.log(data)
+      }).error(function () {
+        alert('Ocurrio un problema con la conexion, vuelva a intentar.')
+        return;
+      });
+    }
+    // Inicializamos
+    getUsuariosAuto();
+    //
+    var paramsTransferir = {
+      nro_seguimiento: '228382',
+      co_usua_supe: 'RV2'
+    }
+    var executeTrans = function () {
+
+      $http({
+        url: urlNaturale + 'TransferirRuta',
+        method: 'GET',
+        params: paramsTransferir
+      }).success(function (data) {
+        $ionicLoading.show({
+          template: 'Proceso Realizado Correctamente . . ',
+          duration: 2000
+        })
+        paramsTransferir.co_usua_supe = '';
+        $timeout(function () {
+
+          $scope.ListaRutasRc(0);
+        }, 1500)
+      }).error(function () {
+        $ionicLoading.hide();
+        alert('Ocurrio un problema con la conexion, vuelva a intentar.')
+        return;
+      });
+    }
+    $scope.openModalTransferir = function (item) {
+      paramsTransferir.nro_seguimiento = String(item.id);
+      var cabecera, template;
+
+      cabecera = "Transferir Ruta";
+      template = '<div class="modalStyle">' +
+        '<div class="card-panel grey lighten-5 z-depth-1 cardP" id="item{{item.co_usua}}" ng-repeat="item in listUsuariosAuto" ng-click="selecUsuarios(item)">' +
+        '<div class="row valign-wrapper contentPlantilla">' +
+        '<div class="col"><span class="black-text">{{item.co_usua}}</span>' +
+        '</div></div></div></div>';
+      var alertPopAux = alertPop(cabecera, template, '', $scope);
+      paramsAct.idLocal = item.idTienda;
+      alertPopAux.then(function (res) {
+
+        if (res != 'success') {
+          return;
+        };
+        if (paramsTransferir.co_usua_supe == '') {
+          $ionicLoading.show({
+            template: 'Seleccionar un usuario . . ',
+            duration: 2000
+          });
+          return;
+        }
+        console.log(paramsTransferir)
+
+        $ionicLoading.show({
+          template: 'Transfiriendo Ruta . . ',
+        });
+        executeTrans();
+      })
+    }
+    $scope.selectCuadrante = function (item) {
+      paramsAct.Cuadrante = item;
       for (var i = 0; i < $scope.listCuadrante.length; i++) {
         var element = document.getElementById('item' + $scope.listCuadrante[i]);
         element.classList.remove("cardP2");
-        
       }
       var id = 'item' + item;
       var item = document.getElementById(id);
 
       item.classList.add("cardP2");
     }
+    $scope.selecUsuarios = function (item) {
+      paramsTransferir.co_usua_supe = item.co_usua;
 
+      for (var i = 0; i < $scope.listUsuariosAuto.length; i++) {
+        var id = 'item' + $scope.listUsuariosAuto[i].co_usua;
+        var element = document.getElementById(id);
+        element.classList.remove("cardP2");
+      }
+      var id = 'item' + item.co_usua;
+      var item = document.getElementById(id);
+      item.classList.add("cardP2");
+    }
     //
 
     //$scope.chats = Chats.all();
@@ -652,7 +825,7 @@ angular.module('starter.controllers', ['firebase'])
         method: 'GET',
         params: params
       }).success(function (data) {
-
+        console.log(data)
         $scope.canales = [];
         Chats.llenarRutas(data);
         var id = "";
@@ -673,7 +846,8 @@ angular.module('starter.controllers', ['firebase'])
                 nomTienda: data[i].nomTienda,
                 direccion: data[i].direccion,
                 count: '1',
-                fecha: data[i].fechaSupe
+                fecha: data[i].fechaSupe,
+                ruc: data[i].ruc
               })
             id = data[i].idTienda;
           } else {
@@ -729,7 +903,8 @@ angular.module('starter.controllers', ['firebase'])
               nomTienda: dataTem[i].nomTienda,
               direccion: dataTem[i].direccion,
               count: '1',
-              fecha: dataTem[i].fechaSupe
+              fecha: dataTem[i].fechaSupe,
+              ruc: dataTem[i].ruc
             })
           id = dataTem[i].idTienda;
         } else {

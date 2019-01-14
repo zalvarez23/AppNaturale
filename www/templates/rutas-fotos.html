@@ -4,6 +4,13 @@
  
     <div id="paginaPrincipal" >
       <div  id="contentVenta"style="font:menu;display:none;" > 
+        <p style="    margin: 10px;
+        font-size: 15px !important;
+        text-align: center;
+        font: menu;
+        /* font-weight: 600; */
+        color: #127dfd;
+        text-transform: capitalize">{{itemRuta.nomTienda}}</p>
      <a class="item item-icon-left assertive" style="white-space: normal; font-size:12px;text-align: center;">
     
     {{titleRutaFoto}}
@@ -21,6 +28,10 @@
     <i class="icon ion-briefcase"></i>
     Ver Reportes    
   </a>
+  <label class="item item-input">
+    <input type="text" placeholder="Lugar de venta..">
+  </label>
+
 </div>
     <ion-list id="listaRutas">
       <ion-item class="item-remove-animate"  ng-repeat="item in productosAgregados" style="text-transform:capitalize;">
@@ -44,7 +55,16 @@
 <div class="list card">
   <a class="item item-icon-left positive" id="btnGenerarPedido" ng-click="PopAddCabConfirm();" style="font: menu;font-size: 13px;">
     <i class="icon ion-briefcase"></i>
-    Generar Pedidos 
+    Guardar Pedidos 
+  
+   
+  </a>
+</div>
+
+<div class="list card">
+  <a class="item item-icon-left positive" id="btnGenerarPedido" ng-click="PopAddCabConfirm();" style="font: menu;font-size: 13px;">
+    <i class="icon ion-briefcase"></i>
+    Generar Comprobante 
   
    
   </a>
