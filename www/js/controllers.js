@@ -66,8 +66,46 @@ angular.module('starter.controllers', ['firebase'])
 
     // parametros de la pagina
 
-    $scope.itemRuta = JSON.parse(localStorage.getItem('dataRuta'));
- 
+    $scope.itemRuta = JSON.parse(localStorage.getItem('dataRuta'));    
+    var dataUser = JSON.parse(localStorage.getItem('userData'));
+    var paramsSendPedido = {
+      i_local : $scope.itemRuta.idTienda,
+      ti_docu : 'B',
+      nro_seguimiento : $scope.itemRuta.id,
+      usuario : dataUser.usuario,
+      nu_serie : '',
+      listDetalle : []
+    }
+
+
+    var execSavePedido = function(){
+      var listDetail = [];
+      for (var i = 0; i < $scope.productosAgregados.length; i++) {
+        listDetail.push({
+          i_producto : $scope.productosAgregados[i].id,
+          nu_cant : $scope.productosAgregados[i].cantidad,
+          im_prec_vent : $scope.productosAgregados[i].precProducto,
+          nu_pedi : 0,
+          de_obse : ''
+        });
+      }
+      paramsSendPedido.listDetalle = listDetail;
+      console.log(JSON.stringify(paramsSendPedido));
+      
+      $http({
+        url: urlNaturale + 'GuardarPedidoCabDet',
+        method: 'GET',
+        params: { objPedidoCabDet : JSON.stringify(paramsSendPedido)}
+      }).success(function (data) {
+        console.log(data);
+      }).error(function (err) {
+        console.log(err);
+      });
+
+    }
+
+
+
     var parameters = $stateParams.fotoId;
     parameters = parameters.split("|");
 
@@ -148,6 +186,7 @@ angular.module('starter.controllers', ['firebase'])
       }).success(function (data) {
 
         $scope.productos = data;
+        console.log($scope.productos);
         var items = $scope.productosAgregados;
 
         for (var i = 0; i < items.length; i++) {
@@ -241,7 +280,8 @@ angular.module('starter.controllers', ['firebase'])
       });
 
       confirmPopup.then(function (res) {
-        if (res) {
+        if (res) {          
+          execSavePedido();
           $scope.AddCabPedido();
         } else {
           return false
@@ -1080,7 +1120,7 @@ angular.module('starter.controllers', ['firebase'])
 
           if (data[0].tipo == 'GERE' || data[0].tipo == 'GEZO') {
             usuario = data[0].nombres;
-            usunick = data[0].usuario;
+            usunick = data[0].usuario;            
             $ionicLoading.hide();
             location.href = "indexAdm.html#/adm/perfil/" + usuario + '&' + usunick;
           } else {
@@ -1089,7 +1129,7 @@ angular.module('starter.controllers', ['firebase'])
             $ionicLoading.hide();
             location.href = "#/tab/rutas";
           };
-
+          localStorage.setItem('userData',JSON.stringify(data[0]));
         };
 
 
@@ -1462,7 +1502,7 @@ angular.module('starter.controllers', ['firebase'])
       });
 
       confirmPopup.then(function (res) {
-        if (res) {
+        if (res) {          
           $scope.DeleteDetailsPedido();
         } else {
           return false
