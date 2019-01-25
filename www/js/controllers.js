@@ -220,10 +220,31 @@ angular.module('starter.controllers', ['firebase'])
       doc.text(x + 32, y + 235, '0320050000367/SUNAT')
       doc.text(x + 19, y + 240, 'Repr. Impresa del Documento Electrónico')
       doc.text(x + 22, y + 245, 'Consultar en: www.naturale.com.pe')
-    
-    
-      //doc.output('dataurlnewwindow');
-        doc.output('save', 'report.pdf');
+      // CAPTURAMOS EL URI
+      var uristring = doc.output('datauristring');
+      var uristringparts = uristring.split(',');
+      var urifinal = uristringparts[0] + ',' + uristringparts[1];
+      var url = urifinal;
+      // ESCOGEMOS NOMBRE
+      var targetPath = cordova.file.documentsDirectory + "reporte.pdf";
+      var trustHosts = true;
+      var options = {};
+
+      $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+      .then(function(result) {
+        alert('success')
+        alert(JSON.stringify(result))
+        // Success!
+      }, function(err) {
+        alert('err')
+        alert(JSON.stringify(err))
+        // Error
+      }, function (progress) {
+        $timeout(function () {
+          $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+        });
+      });
+
     }
 
     $scope.itemRuta = JSON.parse(localStorage.getItem('dataRuta'));    
