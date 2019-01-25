@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="starterAdm">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+
+		<title>Ionic Framework Example</title>
+		<link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+		<script src="lib/ionic/js/ionic.bundle.js"></script>
+	
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/appAdm.js"></script>
+    
+    <script src="js/controllersAdm.js"></script>
+
+    <script src="js/servicesAdm.js"></script>
+
+	</head>
+
+	<body >
+
+    <ion-side-menus ng-controller="ctrlhome">
+      
+      <ion-pane ion-side-menu-content ng-class="{'opaque-content' : sidemenuopened}" id="contentPanel">
+        <ion-nav-bar class="bar-balanced nav-title-slide-ios7">
+        <ion-nav-buttons side="left">
+          <button class="button button-icon button-clear ion-navicon" ng-click="openMenu()"></button>
+        </ion-nav-buttons>  
+
+        </ion-nav-bar>
+
+        <ion-nav-view></ion-nav-view>
+      </ion-pane>
+
+      <ion-side-menu side="left">
+        <ion-content has-header="true">
+      <a class="item item-avatar" href="#">
+     <img src="img/photo.jpg">
+      <h2 id="txtnomusu">Bienvenido al App</h2>
+      <p>Gestión de rutas.</p>
+    </a>
+          <div class="list">
+      <a class="item {{sort.icon}} fontLista" menu-close href="" ng-click="redirectWiew({{sort.score}})" ng-value="{{sort.score}}"  ng-repeat="sort in sorting" style="color:#699908;font-size:20px !important;" ><n style="font-size:13px !important; color:#060606;">&nbsp; &nbsp; &nbsp; &nbsp;{{sort.name}}</n> </a>
+
+          </div>
+          
+        </ion-content>
+      </ion-side-menu>
+      
+    </ion-side-menus>
+    
+  <ion-nav-view name="tab-perfil" ></ion-nav-view>
+  
+
+  
+  
+
+	</body>
+</html>

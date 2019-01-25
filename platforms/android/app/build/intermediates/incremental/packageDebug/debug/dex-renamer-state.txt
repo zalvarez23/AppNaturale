@@ -1,0 +1,4 @@
+#Fri Jan 25 15:00:13 PET 2019
+base.0=/Users/kevin/Desktop/IonicProject/AppNaturale/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex

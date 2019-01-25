@@ -1,0 +1,101 @@
+<ion-view view-title="Listado de rutas">
+
+  <ion-content class="scroll-content ionic-scroll">
+    <ion-refresher on-refresh="ListaRutasRc(1)"></ion-refresher>
+    <div class="list card">
+      <div class="item item-avatar">
+
+        <img src="img/photo.jpg">
+        <h2>{{usuariologer}}</h2>
+        <p>Seleccióne un tienda a supervisar .</p>
+
+      </div>
+      <label class="item item-input" style="display:none;">
+        <span class="input-label" style="font-size:11px;">Desde</span>
+        <input style="font-size:11px;" id="txtfechaini" value="{{fechaini}}" type="date">
+      </label><label class="item item-input" style="display:none;">
+        <span class="input-label" style="font-size:11px;">Hasta</span>
+        <input style="font-size:11px;" id="txtfechafin" type="date">
+      </label>
+      <div class="row">
+        <div class="col">
+          <ion-checkbox ng-model="paramsCheck.check1" ng-click="changeCheck(1)" style="font: menu;font-size: 12px;color: #464343; text-transform:capitalize; border-width: none !important;     border-style: initial !important; ">
+            Busqueda Lista
+          </ion-checkbox>
+        </div>
+        <div class="col">
+          <ion-checkbox  ng-model="paramsCheck.check2" ng-click="changeCheck(2)" style="font: menu;font-size: 12px;color: #464343; text-transform:capitalize; border-width: none !important;     border-style: initial !important; ">
+            Busqueda BD
+          </ion-checkbox>
+        </div>
+      </div>
+        <div ng-show="paramsCheck.check1" class="list list-inset" style="border: 1px solid #b2b2b254;
+        margin-top: -5px;">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" ng-model="rucSearch" placeholder="Busqueda por RUC..">
+          </label>
+        </div>
+        <div class="list" ng-show= "paramsCheck.check2" style="border: 1px solid #b2b2b254;">
+
+          <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+              <input type="text" placeholder="Busqueda por Ruc . ." ng-model="paramsSearchRuc.ruc">
+            </label>
+            <button class="button button-small button-assertive" ng-click= "ListaRutasRc2()">
+              Buscar
+            </button>
+          </div>
+        
+        </div>
+      <a ng-if="paramsCheck.check1" class="item item-icon-left positive" ng-click="ListaRutasRc(0)" style="font:menu; font-size:13px;">
+        <i class="icon ion-refresh"></i>
+        Presione para actualizar.
+      </a>
+    </div>
+    <div id="divCargandoRutas" style="text-align:center;padding-top:2px;display:{{loadingDis}}">
+      <ion-spinner icon="android"></ion-spinner>
+      <p></p>
+      <p style="font:menu; font-size:11px;">Cargando rutas..</p>
+      <ion-list>
+        <br>
+    </div>
+    <ion-list id="listaRutas" ng-if='paramsCheck.check1'>
+      <ion-item class="item-remove-animate item-avatar" ng-repeat="ruta in canales | filter : rucSearch" ng-click="saveItem(ruta)" href="#/tab/chats/{{ruta.id}}|{{ruta.idTienda}}">
+        <img ng-src="img/alert.png">
+        <h2 style="color:rgb(82, 112, 163);font-size:12px; text-transform: capitalize;">{{ruta.nomTienda}}</h2>
+        <p style="font-size:11px;">{{ruta.direccion}}</p>
+
+        <n class="badge">
+          <p style="font-size:11px;">{{ruta.fecha}} </p>
+        </n>
+        <ion-option-button class="button-assertive" ng-click="openModalActualizar(ruta)">
+          Actualizar
+        </ion-option-button>
+        <ion-option-button class="button-success" ng-click="openModalTransferir(ruta)">
+          Transferir
+        </ion-option-button>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-list id="listaRutas" ng-if='paramsCheck.check2'>
+      <ion-item class="item-remove-animate item-avatar" ng-repeat="ruta in canales2">
+        <img ng-src="img/alert.png">
+        <h2 style="color:rgb(82, 112, 163);font-size:12px; text-transform: capitalize;">{{ruta.nomTienda}}</h2>
+        <p style="font-size:11px;">{{ruta.direccion}}</p>
+
+        <n class="badge">
+          <p style="font-size:11px;">{{ruta.fecha}} </p>
+        </n>
+        <ion-option-button class="button-assertive" ng-click="openModalActualizar(ruta)">
+          Actualizar
+        </ion-option-button>
+      </ion-item>
+
+    </ion-list>
+
+
+  </ion-content>
+
+</ion-view>

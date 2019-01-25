@@ -1,0 +1,67 @@
+
+<ion-view view-title="Actualizar Rutas" name="">
+  <ion-content >
+      <div class="list card">
+
+  <div class="item item-avatar">
+    <img src="img/photo.jpg">
+    <h2>Actualizar Rutas</h2>
+    <p>{{fechaNow}}</p>
+
+  </div>
+
+</div>
+  
+  <ion-list >
+  <h2 class="model2">Datos Actuales</h2>
+      <ion-item  class="animate-repeat-ti item-avatar item-icon-right" ng-repeat="ti in listDet"  type="item-text-wrap"  href="">
+        <img  ng-src="img/photo.jpg" >
+        
+        <h2 style="font-size:12px;">{{ti.co_usua_supe}}</h2>
+
+        <h1 style="font-size:11px;color:#699908">Fecha de supervisión : {{ti.fe_supe}}</h1>
+        
+     <n class="badge" ><p style="font-size:11px;"  >{{ti.fe_foto_ante}}</p></n>     
+    
+      </ion-item>
+    </ion-list>
+
+    <h2 class="model2">Datos a cambiar</h2>
+  <div class="item item-body" >
+    
+   <label class="item item-input item-select" >
+    <div class="input-label" >
+      <p style="font:menu; font-size:13px;">Supervisor</p>
+    </div>
+    <select  ng-model="usuSuper[0].cosupe">
+      
+      <option  ng-repeat="sup in ListaSuper" ng-selected="sup.co_usua==listDet[0].co_usua_supe">{{sup.co_usua}}</option>
+      
+    </select>
+
+    </label>
+    <label class="item item-input item-select" >
+    <div class="input-label" >
+      <p style="font:menu; font-size:13px;">Ruta</p>
+    </div>
+    <select  ng-model="ruta[0].coruta">
+      
+      <option ng-repeat="sup in ListaRutasAux" ng-selected="sup.co_ruta==listDet[0].co_ruta">{{sup.co_ruta}}</option>
+      
+      
+    </select>
+
+    </label>
+     <label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Fecha Supe</span>
+  <input style="font-size:11px;" id="txtfesupe"   type="date" >
+  
+</label>
+  </div>
+     <a class="item item-icon-left positive" ng-click="UpdateRuta()">
+    <i class="icon ion-refresh"></i>
+    Presione para actualizar. 
+  </a>  
+  
+    </ion-content>
+</ion-view>

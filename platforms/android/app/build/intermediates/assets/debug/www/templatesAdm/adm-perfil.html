@@ -1,0 +1,75 @@
+
+<ion-view view-title="Lista de rutas" name="">
+  <ion-content >
+      <div class="list card">
+
+  <div class="item item-avatar">
+    <img src="img/photo.jpg">
+    <h2>{{nombreUsu }}</h2>
+    <p>{{fechaNow}}</p>
+
+  </div>
+
+  <div class="item item-body" >
+
+   <label class="item item-input item-select" >
+    <div class="input-label" >
+      <p style="font:menu; font-size:13px;">Supervisor</p>
+    </div>
+    <select  ng-model="usuSuper[0].cosupe">
+      
+      <option  ng-repeat="sup in ListaSuper">{{sup.CO_USUA}}</option>
+      <option  selected>Todos</option>
+    </select>
+
+    </label>
+
+  <label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Desde</span>
+  <input style="font-size:11px;" id="fechaini"  type="date">
+</label>
+
+<label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Hasta</span>
+  <input style="font-size:11px;" id="fechafin" type="date">
+</label>
+   <div class="row">
+  <div class="col"  ng-repeat="ch in checkeds"><label class="checkbox">
+       <input type="checkbox" id="{{ch.score}}" ng-model="ch.check" ng-click="HabilitarCheck(ch.score)" ng-checked="ch.check">
+     </label> <n style="font-size:12px;">{{ch.score}}</n></div>
+    
+</div>
+     <a class="item item-icon-left positive"  ng-click="ListarTotal()">
+    <i class="icon ion-refresh"></i>
+    Presione para actualizar. 
+  </a>  
+  </div>
+
+</div>
+<div id="divCargandoH" style="text-align:center;padding-top:40px;display:none;">
+
+    <ion-spinner icon="android" ></ion-spinner>
+    
+     <ion-list>
+     <br>
+  </div>
+   <label class="item item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input type="text" ng-model="searchText" placeholder="Busqueda. .">
+  </label>
+	  <ion-list >
+      <ion-item  class="animate-repeat-ti item-avatar item-icon-right" ng-repeat="ti in listaTotales |  filter:searchText"  type="item-text-wrap" ng-href="{{ti.fotoSINO == 'si' &&  'indexAdm.html#/adm/punt/' + ti.nroSegui + '|' +ti.coCanal+ '|' +ti.ventaFlag + '|' + ti.ventaSINO + '|' + ti.fotoSINO + '|' + ti.idPedido + '|' + ti.tipdocu + '|' + ti.flagPuntuacion + '|' + ti.puntajeRealizado + '|' + ti.puntajeMinimo + '|' + ti.puntajeMaximo || '' }}">
+          <img ng-if="ti.fotoSINO == 'si'" ng-src="{{ti.ventaFlag == 'si' && 'img/venta.png' || 'img/foto.png'}}">
+          <img ng-if="ti.fotoSINO == 'no'" ng-src="img/photo.jpg">
+        
+        <h2 style="font-size:12px;">{{ti.codUsuario}} <n ng-style="{'color' : '{{ti.color}}','font-size' : '20px'}" class="ion-ios-checkmark-empty"></n></h2>
+
+        <h1 style="font-size:11px;color:#699908">Fecha de supervisión : {{ti.fechaSupe}}</h1>
+        <p style="font-size:11px;">Cliente : {{ti.tiendaSegui}}</p>
+        <p style="font-size:11px;">Dirección : {{ti.direSegui}}</p>
+         
+     <n class="badge" ><p style="font-size:11px;"  >{{ti.fe_foto_ante}}</p></n>     
+      </ion-item>
+    </ion-list>
+    </ion-content>
+</ion-view>

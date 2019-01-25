@@ -1,0 +1,42 @@
+<ion-view view-title="Tareas Completadas">
+  <ion-content >
+
+ <div class="item item-avatar">
+    <img src="img/photo.jpg">
+     <h2>{{usuariologer}}</h2>
+    <p>Historial de pedidos generados.</p>
+  
+
+  </div>
+ <label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Desde</span>
+  <input style="font-size:11px;" id="txtfechainiL"  type="date">
+</label><label class="item item-input">
+  <span class="input-label" style="font-size:11px;">Hasta</span>
+  <input style="font-size:11px;" id="txtfechafinL" type="date">
+</label>
+<a class="item item-icon-left positive"  ng-click="listaPedidosRealizados()" style="font:menu; font-size:13px;">
+    <i class="icon ion-refresh"></i>
+    Presione para actualizar. 
+  </a>  
+ 
+  <div id="divCargandoH" style="text-align:center;padding-top:40px;display:none;">
+    <ion-spinner icon="android" ></ion-spinner>
+    
+     <ion-list>
+     <br>
+  </div>
+
+
+    <ion-list ng-init="listaPedidosRealizados()" >
+      <ion-item  class="item-remove-animate item-avatar item-icon-right"  href="#/tab/listaDetail/{{li.nroSegui}}|{{li.coCanal}}|{{li.ventaFlag}}|{{li.ventaSINO}}|{{li.fotoSINO}}|{{li.idPedido}}|{{li.tipdocu}}" ng-repeat="li in listaHistorialPedidos" type="item-text-wrap" href="">
+        <img ng-src="{{li.ventaSINO == 'si' && 'img/venta.png' || 'img/foto.png'}}">
+        <h2 style="font-size:12px;">Nro de Pedido - {{li.nroSegui}}</h2>
+        <p style="font-size:11px;text-transform:capitalize;">{{li.direSegui}} / {{li.tiendaSegui}} </p>
+     <n class="badge" ><p style="font-size:11px;">{{li.fechaSegui}} </p></n> 
+      
+      </ion-item>
+    </ion-list>
+    
+  </ion-content>
+</ion-view>
